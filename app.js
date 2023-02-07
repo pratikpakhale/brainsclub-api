@@ -21,14 +21,18 @@ app.post('/log', (req, res) => {
   }
 })
 
-//connect to db and start server
-mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
-  .then(() => {
-    app.listen(3000, () => {
-      console.log(`Server started on port ${3000}`)
+// start server
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`)
+  mongoose
+    .connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
     })
-  })
-  .catch(err => {
-    console.log(err)
-  })
+    .then(() => {
+      console.log('Connected to database')
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
